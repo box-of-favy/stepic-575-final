@@ -1,6 +1,4 @@
 import pytest
-import yaml
-import os
 from selenium import webdriver
 
 def pytest_addoption(parser):
@@ -8,13 +6,6 @@ def pytest_addoption(parser):
                      help="Choose browser: chrome or firefox")
     parser.addoption('--language', action='store', default="en",
                          help="Choose language: ru, en")
-@pytest.fixture(scope="session")
-def config():
-    """Загружает конфигурацию из файла config.yaml"""
-    config_path = os.path.join(os.path.dirname(__file__), 'config.yaml')
-    with open(config_path, 'r') as file:
-        return yaml.safe_load(file)
-
 
 @pytest.fixture(scope="function")
 def browser(request):
@@ -26,6 +17,7 @@ def browser(request):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
         browser = webdriver.Chrome(options=options)
+        options.add_argument('--headless')
     elif browser_name == "firefox":
         print("\nstart firefox browser for test..")
         fp = webdriver.FirefoxProfile()

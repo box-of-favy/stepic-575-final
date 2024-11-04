@@ -9,7 +9,7 @@ class LoginPage(BasePage):
         self.should_be_register_form()
 
     def should_be_login_url(self):
-        assert "login" in self.browser.current_url, "current url doesn't contain login"
+        assert "accounts/login/" in self.browser.current_url, "current url doesn't contain login"
 
     def should_be_login_form(self):
         assert self.is_element_present(*LoginPageLocators.LOGIN_FORM), "Login form is not presented"
@@ -25,7 +25,8 @@ class LoginPage(BasePage):
         email_field.send_keys(email)
         password_field = self.browser.find_element(*LoginPageLocators.REGISTER_PASSWORD)
         password_field.send_keys(password)
-        password_confirm_field = self.browser.find_element(*LoginPageLocators.REGISTER_CONFIRM_PASSWORD)
+        password_confirm_field = (self.browser.find_element
+                                  (*LoginPageLocators.REGISTER_CONFIRM_PASSWORD))
         password_confirm_field.send_keys(password)
         button = self.browser.find_element(*LoginPageLocators.REGISTER_BUTTON)
         button.click()

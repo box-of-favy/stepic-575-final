@@ -1,9 +1,7 @@
-Как создать и активировать виртуальное окружение:
+How to create and activate virtual environment:
 
-python -m venv venv
+1. python -m venv venv
+2. venv\Scripts\activate 
 
-venv\Scripts\activate 
-
-Как установить все из requirements.txt
-
+How to install all from requirements.txt
 pip install -r requirements.txt
