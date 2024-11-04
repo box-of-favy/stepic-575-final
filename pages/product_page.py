@@ -21,8 +21,20 @@ class ProductPage(BasePage):
             print("No second alert presented")
 
     def add_to_basket(self):
+        button = self.browser.find_element(*ProductPageLocators.BASKET_ADD_BUTTON)
+        button.click()
+
+    def go_to_basket_page(self):
         button = self.browser.find_element(*ProductPageLocators.BASKET_BUTTON)
         button.click()
+
+    def should_be_no_books_in_basket(self):
+        assert self.is_not_element_present(*ProductPageLocators.BOOKS_IN_BASKET), \
+            "Basket has books but should be empty"
+
+    def should_be_empty_basket_message(self):
+        assert self.is_element_present(*ProductPageLocators.EMPTY_BASKET), \
+            "Basket has no message that it is empty"
 
     def should_be_success_message(self):
         assert self.is_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
