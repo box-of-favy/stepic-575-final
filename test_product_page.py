@@ -1,5 +1,6 @@
+import random
+import string
 import time
-import faker
 import pytest
 
 from pages.basket_page import BasketPage
@@ -91,9 +92,13 @@ class TestUserAddToBasketFromProductPage:
         login_page = LoginPage(browser, link)
         self.product_page = ProductPage(browser, link)
         login_page.open()
-        f = faker.Faker()
-        email = f.email(domain="example.com")
-        password = f.password(length=10)
+
+        timestamp = str(int(time.time()))
+        email = f"user_{timestamp}@example.com"
+
+        characters = string.ascii_letters + string.digits  # a-z, A-Z, 0-9
+        password = ''.join(random.choice(characters) for _ in range(10))
+
         login_page.register_new_user(email, password)
         login_page.should_be_authorized_user()
 
